@@ -3,7 +3,5 @@ Temp
 Library
 Logs
 .idea
-GameBasis.csproj
 Client.sln
 obj
-*.csproj

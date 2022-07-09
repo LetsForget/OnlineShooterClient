@@ -1,5 +1,6 @@
 ﻿using System;
 using RiptideNetworking;
+using RiptideNetworking.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,10 @@ namespace Network.Launcher
         
         private void Start()
         {
-            connectButton.onClick.AddListener(OnConnectButtonPressed);
             Client = new Client();
+            RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
+            
+            connectButton.onClick.AddListener(OnConnectButtonPressed);
         }
 
         private void OnConnectButtonPressed()

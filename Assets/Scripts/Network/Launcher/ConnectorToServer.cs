@@ -8,6 +8,8 @@ namespace Network.Launcher
 {
     public class ConnectorToServer : MonoBehaviour
     {
+        public event Action ClientInitialized;
+        
         [SerializeField] private Checker ipChecker;
         [SerializeField] private Checker portChecker;
 
@@ -18,11 +20,24 @@ namespace Network.Launcher
         private void Start()
         {
             Client = new Client();
+            ClientInitialized?.Invoke();
+            
+            
             RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
             
             connectButton.onClick.AddListener(OnConnectButtonPressed);
         }
 
+        private void FixedUpdate()
+        {
+            Client.Tick();
+        }
+
+        private void OnDestroy()
+        {
+            Client.Disconnect();
+        }
+        
         private void OnConnectButtonPressed()
         {
             if (!ipChecker.Correct || !portChecker.Correct)

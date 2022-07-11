@@ -7,12 +7,10 @@ namespace Network
 {
     public class ClientHandler : MonoBehaviour
     {
-        [SerializeField] private ClientEcsProvider clientEcsProvider;
+        [SerializeField] private ClientEcsProvider ecsProvider;
         
         public Client Client { get; private set; }
 
-        private int clientId;
-        
         private void Start()
         {
             Client = new Client();
@@ -20,7 +18,7 @@ namespace Network
             Client.ClientConnected += OnClientConnected;
             Client.MessageReceived += ClientOnMessageReceived;
 
-            clientEcsProvider.Client = Client;
+            ecsProvider.Client = Client;
         }
         
         private void FixedUpdate()
@@ -35,7 +33,7 @@ namespace Network
 
         private void OnClientConnected(object sender, ClientConnectedEventArgs e)
         {
-            clientId = e.Id;
+
         }
         
         private void ClientOnMessageReceived(object sender, ClientMessageReceivedEventArgs e)
@@ -43,19 +41,21 @@ namespace Network
             switch (e.MessageId)
             {
                 case 1:
-                {
+                {                    
+                    var characterMovementUpdate = CharacterMovementUpdateMessage.Convert(e.Message);
+                    ecsProvider.AddUpdate(characterMovementUpdate);
                     break;
                 }
                 case 2:
                 {
                     var clientId = PlayerSpawnMessage.Convert(e.Message);
-                    clientEcsProvider.SpawnPlayer(clientId);
+                    ecsProvider.SpawnPlayer(clientId, Client.Id);
                     break;
                 }
                 case 3:
                 {
                     var clientId = PlayerDestroyMessage.Convert(e.Message);
-                    clientEcsProvider.DestroyPlayer(clientId);
+                    ecsProvider.DestroyPlayer(clientId);
                     break;
                 }
             }

@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6a34089794483fb453edf1ead0f3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clientEcsProvider: {fileID: 1929050606}
+  ecsProvider: {fileID: 1929050606}
 --- !u!1 &387531765
 GameObject:
   m_ObjectHideFlags: 0

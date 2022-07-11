@@ -18,9 +18,7 @@ public class ClientEcsProvider : BaseEcsProvider
             systems.Init();
         }
     }
-
-    private bool inited = false;
-
+    
     protected override void AddOneFrames()
     {
         base.AddOneFrames();
@@ -33,16 +31,20 @@ public class ClientEcsProvider : BaseEcsProvider
         base.AddSystems();
 
         systems.Add(new UpdateSendSystem());
-        systems.Add(new NetworkSendSystem());
     }
     
-    public void SpawnPlayer(ushort clientId)
+    public void SpawnPlayer(ushort incomeClientId, int thisClientId)
     {
-        SpawnSystem.Spawn(clientId, Vector3.zero);
+        SpawnSystem.Spawn(incomeClientId, Vector3.zero, thisClientId);
     }
 
     public void DestroyPlayer(ushort clientId)
     {
         SpawnSystem.Destroy(clientId);
+    }
+
+    public void AddUpdate(CharacterMovementUpdate update)
+    {
+        UpdateReceiveSystem.AddUpdate(update);
     }
 }

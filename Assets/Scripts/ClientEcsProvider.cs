@@ -1,40 +1,37 @@
-﻿using RiptideNetworking;
-using UnityEngine;
+﻿using GameLogic;
+using RiptideNetworking;
 
-namespace GameLogic
+public class ClientEcsProvider : BaseEcsProvider
 {
-    public class ClientEcsProvider : BaseEcsProvider
+    public Client Client
     {
-        public Client Client
+        set
         {
-            set
+            if (inited)
             {
-                if (inited)
-                {
-                    return;
-                }
+                return;
+            }
 
-                inited = true;
-                systems.Inject(value);
-                systems.Init();
-            } 
+            inited = true;
+            systems.Inject(value);
+            systems.Init();
         }
+    }
 
-        private bool inited = false;
-        
-        protected override void AddOneFrames()
-        {
-            base.AddOneFrames();
+    private bool inited = false;
 
-            systems.OneFrame<CharacterMovementUpdate>();
-        }
+    protected override void AddOneFrames()
+    {
+        base.AddOneFrames();
 
-        protected override void AddSystems()
-        {
-            base.AddSystems();
+        systems.OneFrame<CharacterMovementUpdate>();
+    }
 
-            systems.Add(new UpdateSendSystem());
-            systems.Add(new NetworkSendSystem());
-        }
+    protected override void AddSystems()
+    {
+        base.AddSystems();
+
+        systems.Add(new UpdateSendSystem());
+        systems.Add(new NetworkSendSystem());
     }
 }

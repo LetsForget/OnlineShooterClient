@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Network.Launcher
+namespace Network
 {
     public class PortChecker : Checker
     {

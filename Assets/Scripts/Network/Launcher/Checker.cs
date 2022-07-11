@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Network.Launcher
+namespace Network
 {
     public abstract class Checker : MonoBehaviour
     {

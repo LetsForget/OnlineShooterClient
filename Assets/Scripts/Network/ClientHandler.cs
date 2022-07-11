@@ -11,6 +11,8 @@ namespace Network
         
         public Client Client { get; private set; }
 
+        private int clientId;
+        
         private void Start()
         {
             Client = new Client();
@@ -33,12 +35,30 @@ namespace Network
 
         private void OnClientConnected(object sender, ClientConnectedEventArgs e)
         {
-            
+            clientId = e.Id;
         }
         
         private void ClientOnMessageReceived(object sender, ClientMessageReceivedEventArgs e)
         {
-
+            switch (e.MessageId)
+            {
+                case 1:
+                {
+                    break;
+                }
+                case 2:
+                {
+                    var clientId = PlayerSpawnMessage.Convert(e.Message);
+                    clientEcsProvider.SpawnPlayer(clientId);
+                    break;
+                }
+                case 3:
+                {
+                    var clientId = PlayerDestroyMessage.Convert(e.Message);
+                    clientEcsProvider.DestroyPlayer(clientId);
+                    break;
+                }
+            }
         }
     }
 }

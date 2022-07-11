@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scripts\Network\Launcher\PortChecker.cs" />
      <Compile Include="Assets\Scripts\Network\Launcher\IpChecker.cs" />
      <Compile Include="Assets\Scripts\Network\Launcher\ConnectorToServer.cs" />
+     <Compile Include="Assets\Scripts\ClientEcsProvider.cs" />
      <None Include="Assets\Scripts\ClientAsmDef.asmdef" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Unity\2021.3.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -727,6 +728,10 @@
     <ProjectReference Include="GameBasis.csproj">
       <Project>{47e13fc6-518e-a494-5097-b68bbe0885bb}</Project>
       <Name>GameBasis</Name>
+    </ProjectReference>
+    <ProjectReference Include="Leopotam.Ecs.csproj">
+      <Project>{b5368fc2-143d-c11b-2599-76970ffd5caa}</Project>
+      <Name>Leopotam.Ecs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

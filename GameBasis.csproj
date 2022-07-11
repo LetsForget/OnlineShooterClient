@@ -58,7 +58,6 @@
      <Compile Include="Module\GameBasis\Assets\ExportPackage\Scripts\BaseEcsProvider.cs" />
      <Compile Include="Module\GameBasis\Assets\ExportPackage\Scripts\Systems\NetworkSystem\NetworkSendSystem.cs" />
      <Compile Include="Module\GameBasis\Assets\ExportPackage\Scripts\Systems\InputSystem\InputSystem.cs" />
-     <Compile Include="Module\GameBasis\Assets\ExportPackage\Scripts\ClientEcsProvider.cs" />
      <Compile Include="Module\GameBasis\Assets\ExportPackage\Scripts\Systems\MoveSystem\CharacterMovementComponent.cs" />
      <Compile Include="Module\GameBasis\Assets\ExportPackage\Scripts\Systems\InputSystem\InputComponent.cs" />
      <None Include="Module\GameBasis\Assets\ExportPackage\package.json" />

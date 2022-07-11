@@ -21,7 +21,7 @@ namespace Network
             ecsProvider.Client = Client;
         }
         
-        private void FixedUpdate()
+        private void Update()
         {
             Client.Tick();
         }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ClientEcsProvider : BaseEcsProvider
 {
+    private PlayerUpdateSystem<ClientMovementUpdate, ClientPlayerComponent> playerUpdatePositionSystem = null;
+
+    private SpawnSystem<ClientPlayerComponent> spawnSystem = null;
+
     public Client Client
     {
         set
@@ -19,32 +23,37 @@ public class ClientEcsProvider : BaseEcsProvider
         }
     }
     
-    protected override void AddOneFrames()
-    {
-        base.AddOneFrames();
-
-        systems.OneFrame<CharacterMovementUpdate>();
-    }
-
-    protected override void AddSystems()
-    {
-        base.AddSystems();
-
-        systems.Add(new UpdateSendSystem());
-    }
-    
     public void SpawnPlayer(ushort incomeClientId, int thisClientId)
     {
-        SpawnSystem.Spawn(incomeClientId, Vector3.zero, thisClientId);
+        spawnSystem.Spawn(incomeClientId, Vector3.zero, thisClientId);
     }
 
     public void DestroyPlayer(ushort clientId)
     {
-        SpawnSystem.Destroy(clientId);
+        spawnSystem.Destroy(clientId);
     }
 
-    public void AddUpdate(CharacterMovementUpdate update)
+    public void AddUpdate(ClientMovementUpdate update)
     {
-        UpdateReceiveSystem.AddUpdate(update);
+        playerUpdatePositionSystem.AddUpdate(update);
+    }
+    
+    
+    protected override void AddSystems()
+    {
+        base.AddSystems();
+        systems.Add(spawnSystem = new SpawnSystem<ClientPlayerComponent>())
+            .Add(new InputSystem())
+            .Add(new PlayerObserveSystem())
+            .Add(playerUpdatePositionSystem = new PlayerUpdateSystem<ClientMovementUpdate, ClientPlayerComponent>())
+            .Add(new ClientMovementSystem())
+            .Add(new ClientSendSystem())
+            .Add(new ClientIdSetterSystem<ClientPlayerComponent>());
+    }
+
+    protected override void AddOneFrames()
+    {
+        base.AddOneFrames();
+        systems.OneFrame<ClientMovementUpdate>();
     }
 }

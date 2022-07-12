@@ -40,12 +40,6 @@ namespace Network
         {
             switch (e.MessageId)
             {
-                case 1:
-                {                    
-                    var characterMovementUpdate = CharacterMovementUpdateMessage.Convert(e.Message);
-                    ecsProvider.AddUpdate(characterMovementUpdate);
-                    break;
-                }
                 case 2:
                 {
                     var clientId = PlayerSpawnMessage.Convert(e.Message);
@@ -56,6 +50,12 @@ namespace Network
                 {
                     var clientId = PlayerDestroyMessage.Convert(e.Message);
                     ecsProvider.DestroyPlayer(clientId);
+                    break;
+                }
+                case 4:
+                {
+                    var playerPositionUpdate = ClientMovementUpdateMessage.Convert(e.Message);
+                    ecsProvider.AddUpdate(playerPositionUpdate);
                     break;
                 }
             }

@@ -41,12 +41,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Network\ClientHandler.cs" />
      <Compile Include="Assets\Scripts\Network\Launcher\Checker.cs" />
      <Compile Include="Assets\Scripts\Network\Launcher\PortChecker.cs" />
      <Compile Include="Assets\Scripts\Network\Launcher\IpChecker.cs" />
      <Compile Include="Assets\Scripts\Network\Launcher\ServerConnector.cs" />
      <Compile Include="Assets\Scripts\ClientEcsProvider.cs" />
-     <Compile Include="Assets\Scripts\Network\ClientHandler.cs" />
      <None Include="Assets\Scripts\ClientAsmDef.asmdef" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Unity\2021.3.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

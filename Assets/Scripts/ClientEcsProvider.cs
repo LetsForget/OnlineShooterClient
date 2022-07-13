@@ -31,6 +31,7 @@ public class ClientEcsProvider : BaseEcsProvider
     public void DestroyPlayer(ushort clientId)
     {
         spawnSystem.Destroy(clientId);
+        playerUpdatePositionSystem.OnDestroyPlayer(clientId);
     }
 
     public void AddUpdate(ClientMovementUpdate update)
@@ -49,11 +50,5 @@ public class ClientEcsProvider : BaseEcsProvider
             .Add(new ClientMovementSystem())
             .Add(new ClientSendSystem())
             .Add(new ClientIdSetterSystem<ClientPlayerComponent>());
-    }
-
-    protected override void AddOneFrames()
-    {
-        base.AddOneFrames();
-        systems.OneFrame<ClientMovementUpdate>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GameLogic;
 using RiptideNetworking;
 using UnityEngine;
@@ -15,12 +16,15 @@ namespace Network
         {
             Client = new Client();
 
-            Client.ClientConnected += OnClientConnected;
+            Client.Connected += OnConnected;
+            Client.Disconnected += OnDisconnected;
             Client.MessageReceived += ClientOnMessageReceived;
 
             ecsProvider.Client = Client;
         }
-        
+
+ 
+
         private void Update()
         {
             Client.Tick();
@@ -31,9 +35,20 @@ namespace Network
             Client.Disconnect();
         }
 
-        private void OnClientConnected(object sender, ClientConnectedEventArgs e)
+        private void OnConnected(object sender, EventArgs e)
         {
-
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        
+        private void OnDisconnected(object sender, EventArgs e)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            
+            var keys = ecsProvider.PlayersList.list.Keys.ToList();
+            foreach (var player in keys)
+            {
+                ecsProvider.DestroyPlayer(player);
+            }
         }
         
         private void ClientOnMessageReceived(object sender, ClientMessageReceivedEventArgs e)
